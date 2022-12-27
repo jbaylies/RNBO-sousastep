@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="Bewtx5" name="NewProject" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="MvNZel" name="NewProject">
+    <GROUP id="{CF89017E-416F-16C3-056E-DFE7DA3C9179}" name="Source"/>
+    <FILE id="IkZijG" name="RootComponent.cpp" compile="1" resource="0"
+          file="Source/RootComponent.cpp"/>
+    <FILE id="OYxKwn" name="RootComponent.h" compile="0" resource="0" file="Source/RootComponent.h"/>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="NewProject"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="NewProject"/>
+      </CONFIGURATIONS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES/>
+</JUCERPROJECT>
