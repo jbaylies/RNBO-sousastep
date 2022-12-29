@@ -34,6 +34,7 @@ RootComponent::RootComponent ()
 
     juce__slider.reset (new juce::Slider ("frequency"));
     addAndMakeVisible (juce__slider.get());
+    juce__slider->setTooltip (TRANS("the lowpass filter\'s cutoff frequency"));
     juce__slider->setRange (0, 10, 0);
     juce__slider->setSliderStyle (juce::Slider::LinearHorizontal);
     juce__slider->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
@@ -43,6 +44,7 @@ RootComponent::RootComponent ()
 
     juce__slider2.reset (new juce::Slider ("resonance"));
     addAndMakeVisible (juce__slider2.get());
+    juce__slider2->setTooltip (TRANS("the lowpass filter\'s resonance, or \"Quality\""));
     juce__slider2->setRange (0, 10, 0);
     juce__slider2->setSliderStyle (juce::Slider::LinearHorizontal);
     juce__slider2->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
@@ -127,11 +129,13 @@ void RootComponent::sliderValueChanged (juce::Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == juce__slider.get())
     {
         //[UserSliderCode_juce__slider] -- add your slider handling code here..
+        _coreObject->setParameterValue(sliderParameterIndexes[0], sliderThatWasMoved->getValue());
         //[/UserSliderCode_juce__slider]
     }
     else if (sliderThatWasMoved == juce__slider2.get())
     {
         //[UserSliderCode_juce__slider2] -- add your slider handling code here..
+        _coreObject->setParameterValue(sliderParameterIndexes[1], sliderThatWasMoved->getValue());
         //[/UserSliderCode_juce__slider2]
     }
 
@@ -140,8 +144,40 @@ void RootComponent::sliderValueChanged (juce::Slider* sliderThatWasMoved)
 }
 
 
-
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void RootComponent::setRNBOObject(RNBO::CoreObject *obj)
+{
+    RNBO::ParameterInfo parameterInfo;
+    _coreObject = obj;
+    
+    for (unsigned long i = 0; i < _coreObject->getNumParameters(); i++) {
+        auto parameterName = _coreObject->getParameterId(i);
+        if (juce::String(parameterName) == "frequency") {
+            
+            sliderParameterIndexes[0] = i;
+            auto slider = juce__slider.get();
+            _coreObject->getParameterInfo(i, &parameterInfo);
+            slider->setRange(parameterInfo.min, parameterInfo.max);
+            
+        } else if (juce::String(parameterName) == "resonance") {
+            
+            sliderParameterIndexes[1] = i;
+            auto slider = juce__slider2.get();
+            _coreObject->getParameterInfo(i, &parameterInfo);
+            slider->setRange(parameterInfo.min, parameterInfo.max);
+
+        }
+    }
+}
+
+void RootComponent::updateSliderForParam(unsigned long index, double value)
+{
+    if (sliderParameterIndexes[0] == index) {
+        juce__slider.get()->setValue(value);
+    } else if (sliderParameterIndexes[1] == index) {
+        juce__slider2.get()->setValue(value);
+    }
+}
 //[/MiscUserCode]
 
 
@@ -167,13 +203,13 @@ BEGIN_JUCER_METADATA
           italic="0" justification="36"/>
   </BACKGROUND>
   <SLIDER name="frequency" id="a748c2c0b2b0df6c" memberName="juce__slider"
-          virtualName="" explicitFocusOrder="0" pos="88 16 272 32" min="0.0"
-          max="10.0" int="0.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
+          virtualName="" explicitFocusOrder="0" pos="88 16 272 32" tooltip="the lowpass filter's cutoff frequency"
+          min="0.0" max="10.0" int="0.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
   <SLIDER name="resonance" id="190e3b85bedb8c88" memberName="juce__slider2"
-          virtualName="" explicitFocusOrder="0" pos="88 56 272 32" min="0.0"
-          max="10.0" int="0.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
+          virtualName="" explicitFocusOrder="0" pos="88 56 272 32" tooltip="the lowpass filter's resonance, or &quot;Quality&quot;"
+          min="0.0" max="10.0" int="0.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
 </JUCER_COMPONENT>

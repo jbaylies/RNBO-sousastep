@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Bewtx5" name="NewProject" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              companyWebsite="sousastep.com">
   <MAINGROUP id="MvNZel" name="NewProject">
     <GROUP id="{CF89017E-416F-16C3-056E-DFE7DA3C9179}" name="Source"/>
     <FILE id="IkZijG" name="RootComponent.cpp" compile="1" resource="0"

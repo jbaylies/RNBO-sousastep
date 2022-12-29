@@ -1,5 +1,5 @@
 # build VST3 and Unity for all platforms, add AU on MacOS
-set(PLUGIN_FORMATS VST3 Unity)
+set(PLUGIN_FORMATS VST3)
 if (CMAKE_SYSTEM_NAME STREQUAL Darwin)
   LIST(APPEND PLUGIN_FORMATS AU)
 endif()
@@ -47,9 +47,10 @@ juce_generate_juce_header(RNBOAudioPlugin)
 # that will be built into the target. This is a standard CMake command.
 
 target_sources(RNBOAudioPlugin PRIVATE
-  "${RNBO_CPP_DIR}/adapters/juce/RNBO_JuceAudioProcessor.cpp"
-  "${RNBO_CPP_DIR}/adapters/juce/RNBO_JuceAudioProcessorEditor.cpp"
+  "src/Custom_JuceAudioProcessor.cpp"
+  "src/Custom_JuceAudioProcessorEditor.cpp"
   "${RNBO_CPP_DIR}/RNBO.cpp"
+  "ui/NewProject/Source/RootComponent.cpp"
   ${RNBO_CLASS_FILE}
   src/Plugin.cpp
   )
@@ -58,6 +59,8 @@ include_directories(
   "${RNBO_CPP_DIR}/"
   "${RNBO_CPP_DIR}/common/"
   "${RNBO_CPP_DIR}/adapters/juce/"
+  "src"
+  "ui/NewProject/Source"
   )
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
